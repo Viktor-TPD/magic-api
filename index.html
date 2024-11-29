@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API</title>
+    <link rel="stylesheet" href="user-input.css" />
+  </head>
+  <body>
+    <main>
+      <section class="textInputContainer">
+        <small>enter card color</small>
+        <input type="text" id="inputColor" placeholder="'w', 'g' etc." />
+        <small>enter card text</small>
+        <input
+          type="text"
+          id="inputText"
+          placeholder="'destroy', 'flying' etc."
+        />
+        <button id="generateCard" onclick="getInfo()">Get Card!</button>
+      </section>
+      <div id="randomCards"></div>
+    </main>
+    <script src="fetch.js"></script>
+  </body>
+</html>
