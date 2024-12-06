@@ -1,14 +1,11 @@
-// const url = `https://api.magicthegathering.io/v1/cards`;
-//@info RETURNS 5 RANDOM CARDS
+//RETURNS 1 RANDOM CARD
 const url = `https://api.magicthegathering.io/v1/cards?page=1&pageSize=1&random=true`;
 const divContainer = document.querySelector("#randomCards");
 const div = document.createElement("div");
 
-//USER INPUT
-//PREFIXES
-const cardColorPrefix = "&colors=";
-const cardTextPrefix = "&text=";
+//USER PARAMETERS
 //GET COLOR
+const cardColorPrefix = "&colors=";
 function getCardColorInput() {
   const cardColor = document.getElementById("inputColor");
   const colorValue = cardColorPrefix + cardColor.value;
@@ -16,58 +13,83 @@ function getCardColorInput() {
 }
 
 //GET TEXT
+const cardTextPrefix = "&text=";
 function getCardTextInput() {
   const cardText = document.getElementById("inputText");
   const cardTextValue = cardTextPrefix + cardText.value.replaceAll(" ", ",");
-  console.log(cardTextValue);
   return cardTextValue;
 }
 
+//ADD USER PARAMETERS
+const getUserParameters = () => {
+  const userParameters = url + getCardColorInput() + getCardTextInput();
+  return userParameters;
+};
+
+//GET THE API
 const getInfo = async () => {
   try {
-    //ADD USER INPUT
-    const newUrl = url + getCardColorInput() + getCardTextInput();
-    console.log(newUrl);
+    //PREPARE URL
+    const userParameters = getUserParameters();
     //FETCH THE DATA :)
-    const response = await fetch(newUrl);
-
+    const response = await fetch(userParameters);
     const info = await response.json();
 
-    console.log(info); //@todo REMOVE THIS FROM FINAL PUSH
-    info.cards.forEach((card) => {
-      let cardDiv = document.createElement("div");
-      //FIRST, CLEAR OLD CONTENT
-      divContainer.innerHTML = "";
-      cardDiv.innerHTML = `
-        <h1>${card.name}.</h1>
-        <img src = "${card.imageUrl}">
-        `;
-      divContainer.appendChild(cardDiv);
-    });
-  } catch (e) {
-    console.error(e);
+    //RETURN THE DATA!
+    return info;
+  } catch (error) {
+    console.error(error);
   }
 };
 
-// getInfo();
+//GET IMAGE FROM SCRYFALL (BORROWED FROM CHATGPT)
+const getCardImageUrl = async (cardName) => {
+  try {
+    const response = await fetch(
+      `https://api.scryfall.com/cards/named?exact=${encodeURIComponent(
+        cardName
+      )}`
+    );
 
-// console.log(info);
+    if (!response.ok) {
+      throw new Error(`Error fetching card: ${response.statusText}`);
+    }
 
-// const mtg = require("mtgsdk");
+    const cardData = await response.json();
 
-// // Get all cards
-// mtg.card.all().on("data", function (card) {
-//   console.log(card.name);
-// });
+    // Accessing the image URL from the card data
+    const imageUrl = cardData.image_uris?.normal; // `normal` provides a medium-sized image
+    if (imageUrl) {
+      console.log(`Image URL for ${cardData.name}: ${imageUrl}`);
+      return imageUrl;
+    } else {
+      console.log(`Image not available for ${cardData.name}.`);
+    }
+  } catch (error) {
+    console.error("Error:", error.message);
+  }
+};
 
-// // Filter Cards
-// mtg.card
-//   .all({ supertypes: "legendary", types: "creature", colors: "red,white" })
-//   .on("data", function (card) {
-//     console.log(card.name);
-//   });
+const addContentToPage = (card, image) => {
+  // GET IMAGE
+  card.cards.forEach((card) => {
+    let cardDiv = document.createElement("div");
+    //FIRST, CLEAR OLD CONTENT
+    divContainer.innerHTML = "";
+    cardDiv.innerHTML = `
+        <h1>${card.name}</h1>
+        <img src = "${image}">
+        `;
+    divContainer.appendChild(cardDiv);
+  });
+};
 
-// // Get cards on a specific page / pageSize
-// mtg.card.where({ page: 50, pageSize: 50 }).then((cards) => {
-//   console.log(cards[0].name);
-// });
+//NOW, ADD ALL THE FUNCTIONS TOGETHER AND PRESENT THE DATA
+const getCardButton = document.getElementById("generateCard");
+
+getCardButton.addEventListener("click", async () => {
+  const card = await getInfo();
+  const image = await getCardImageUrl(card["cards"][0].name);
+  addContentToPage(card, image);
+  console.log(card);
+});
