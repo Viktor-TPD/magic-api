@@ -8,3 +8,21 @@
 .textInputContainer input {
   width: 80%;
 }
+
+.colorContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.color > img {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+}
+
+.inactive {
+  display: none;
+}

@@ -5,20 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>API</title>
     <link rel="stylesheet" href="user-input.css" />
+    <link rel="stylesheet" href="cardFX.css" />
   </head>
   <body>
     <main>
+      <!-- <small>enter card color</small>
+        <input type="text" id="inputColor" placeholder="'w', 'g' etc." /> -->
+      <section class="colorContainer">
+        <label class="color white" id="w">
+          <input checked="checked" type="checkbox" />
+          <img src="./assets/W.svg" alt="" />
+        </label>
+
+        <label class="color blue" id="u">
+          <input checked="checked" type="checkbox" />
+          <img src="./assets/U.svg" alt="" />
+        </label>
+
+        <label class="color black" id="b">
+          <input checked="checked" type="checkbox" />
+          <img src="./assets/B.svg" alt="" />
+        </label>
+
+        <label class="color red" id="r">
+          <input checked="checked" type="checkbox" />
+          <img src="./assets/R.svg" alt="" />
+        </label>
+
+        <label class="color green" id="g">
+          <input checked="checked" type="checkbox" />
+          <img src="./assets/G.svg" alt="" />
+        </label>
+
+        <!-- <label class="color colorless" id="c">
+            <input checked="checked" type="checkbox" />
+            <img src="./assets/C.svg" alt="" />
+          </label> -->
+      </section>
       <section class="textInputContainer">
-        <small>enter card color</small>
-        <input type="text" id="inputColor" placeholder="'w', 'g' etc." />
         <small>enter card text</small>
         <input
           type="text"
           id="inputText"
           placeholder="'destroy', 'flying' etc."
         />
-        <button id="generateCard">Get Random Card!</button>
       </section>
+
+      <button id="generateCard">Get Random Card!</button>
       <div id="randomCards"></div>
     </main>
     <script src="fetch.js"></script>
