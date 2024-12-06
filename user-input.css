@@ -1,3 +1,7 @@
+.inactive {
+  display: none;
+}
+
 .textInputContainer {
   display: flex;
   flex-direction: column;
@@ -23,6 +27,7 @@
   justify-content: center;
 }
 
-.inactive {
-  display: none;
+.questionContainer {
+  display: flex;
+  justify-content: space-evenly;
 }
