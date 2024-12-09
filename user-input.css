@@ -2,6 +2,12 @@
   display: none;
 }
 
+body main small {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
 .textInputContainer {
   display: flex;
   flex-direction: column;
@@ -11,6 +17,14 @@
 
 .textInputContainer input {
   width: 80%;
+}
+
+input {
+  opacity: 0;
+  width: 0.1px;
+  height: 0.1px;
+  margin: 0;
+  position: absolute;
 }
 
 .colorContainer {
@@ -30,4 +44,9 @@
 .questionContainer {
   display: flex;
   justify-content: space-evenly;
+}
+
+.loadingImage {
+  height: 100%;
+  width: 100%;
 }

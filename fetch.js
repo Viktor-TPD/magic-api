@@ -1,16 +1,16 @@
 //RETURNS 1 RANDOM CARD
-const url = `https://api.magicthegathering.io/v1/cards?page=1&pageSize=1&random=true`;
+const url = `https://api.magicthegathering.io/v1/cards?`;
 const divContainer = document.querySelector("#randomCards");
 const div = document.createElement("div");
 
 //USER PARAMETERS
 //GET COLOR
 // (EXAMPLE:
-// 'https://api.magicthegathering.io/v1/cards?page=1&pageSize=1&random=true&colors=r,w&!colors=g')
+// 'https://api.magicthegathering.io/v1/cards?page=1&pageSize=1&random=true&colors=r,w&excludeColors=w,u,b,g')
 const cardColorPrefix = "&colors=";
-const cardNotColorPrefix = "&!colors";
 const cardColorIdentityPrefix = "&colorIdentity=";
-const cardColorNotIdentityPrefix = "!&colorIdentity=";
+const cardNotColorPrefix = "&excludeColors=";
+const cardColorNotIdentityPrefix = "&!colorIdentity=";
 
 //BORROWED FROM CHATGPT
 // Function to get checked and unchecked checkbox values
@@ -38,15 +38,19 @@ function getCardColorStates() {
   });
 
   // Join arrays into strings separated by commas
-  // const checkedString = cardColorPrefix + checked.join(",");
-  // const uncheckedString = cardNotColorPrefix + unchecked.join(",");
+
+  console.log("INCLUDE: " + checked);
+  console.log("EXCLUDE: " + unchecked);
 
   const colorParameters =
-    cardColorPrefix +
+    // cardColorPrefix +
+    // checked.join(",") +
+    cardColorIdentityPrefix +
     checked.join(",") +
     cardNotColorPrefix +
     unchecked.join(",");
-
+  // cardColorNotIdentityPrefix +
+  // unchecked.join(",");
   // Return the strings
   return colorParameters;
 }
@@ -54,7 +58,7 @@ function getCardColorStates() {
 // Example usage
 
 //GET TEXT
-const cardTextPrefix = "&text=";
+const cardTextPrefix = "&text=as";
 function getCardTextInput() {
   const cardText = document.getElementById("inputText");
   const cardTextValue = cardTextPrefix + cardText.value.replaceAll(" ", ",");
@@ -64,22 +68,75 @@ function getCardTextInput() {
 //ADD USER PARAMETERS
 const getUserParameters = () => {
   const userParameters = url + getCardColorStates() + getCardTextInput();
+  console.log(userParameters); //@debug
   return userParameters;
 };
 
-//GET THE API
+// CLIENT SIDE FIXING
+const filterCardsByColor = (cards, includeColors, excludeColors) => {
+  return cards.filter((card) => {
+    const cardColors = card.colors || [];
+    const cardIdentity = card.colorIdentity || [];
+
+    // DOES CARD HAVE EXCLUDED COLORS?
+    const hasExcludedColor =
+      cardColors.some((color) => excludeColors.includes(color)) ||
+      cardIdentity.some((color) => excludeColors.includes(color));
+
+    // DOES CARD MATCH ATLEAST ONE COLOR?
+    const hasIncludedColor = includeColors.some(
+      (color) => cardColors.includes(color) || cardIdentity.includes(color)
+    );
+
+    return !hasExcludedColor && hasIncludedColor;
+  });
+};
+
+// GET THAT INFO
 const getInfo = async () => {
   try {
-    //PREPARE URL
     const userParameters = getUserParameters();
-    //FETCH THE DATA :)
-    const response = await fetch(userParameters);
-    const info = await response.json();
+    console.log(userParameters);
+    const response = await fetch(userParameters + "&random=true");
+    const data = await response.json();
 
-    //RETURN THE DATA!
-    return info;
+    // Filter the results based on the user's criteria
+
+    // Select all checkboxes in the colorContainer section
+    const checkboxes = document.querySelectorAll(
+      '.colorContainer input[type="checkbox"]'
+    );
+
+    // Initialize arrays to hold checked and unchecked IDs
+    let checked = [];
+    let unchecked = [];
+
+    // Loop through each checkbox
+    checkboxes.forEach((checkbox) => {
+      // Get the parent label's ID
+      const parentId = checkbox.parentElement.id;
+
+      // Add to the respective array based on the checkbox's state
+      if (checkbox.checked) {
+        checked.push(parentId);
+      } else {
+        unchecked.push(parentId);
+      }
+    });
+
+    const includeColors = checked;
+    const excludeColors = unchecked;
+
+    const filteredCards = filterCardsByColor(
+      data.cards,
+      includeColors,
+      excludeColors
+    );
+
+    console.log(filteredCards); // This will log only the valid filtered cards
+    return { cards: filteredCards }; // Return the filtered cards
   } catch (error) {
-    console.error(error);
+    console.error("Error fetching cards:", error);
   }
 };
 
@@ -101,7 +158,7 @@ const getCardImageUrl = async (cardName) => {
     // Accessing the image URL from the card data
     const imageUrl = cardData.image_uris?.normal; // `normal` provides a medium-sized image
     if (imageUrl) {
-      console.log(`Image URL for ${cardData.name}: ${imageUrl}`);
+      // console.log(`Image URL for ${cardData.name}: ${imageUrl}`);
       return imageUrl;
     } else {
       console.log(`Image not available for ${cardData.name}.`);
@@ -112,20 +169,12 @@ const getCardImageUrl = async (cardName) => {
 };
 
 const addContentToPage = (card, image) => {
-  // ADD LOADING BAR?
-  // divContainer.innerHTML = `
-  //         <img src="./assets/days-of-our-lives-hourglass.gif" alt="" />
-  // `;
   // GET IMAGE
   card.cards.forEach((card) => {
     let cardDiv = document.createElement("div");
     //FIRST, CLEAR OLD CONTENT
     divContainer.innerHTML = "";
-    // cardDiv.innerHTML = `
-    //     <h1>${card.name}</h1>
-    //     <img src = "${image}">
-    //     `;
-    console.log("Before trying to print");
+
     cardDiv.innerHTML = `<div class="container noselect">
     <div class="canvas">
     <div class="tracker tr-1"></div>
@@ -155,21 +204,32 @@ const addContentToPage = (card, image) => {
     <div class="tracker tr-25"></div>
     <div id="card">
     <img src="${image}"/>
-    
+
     </div>
     </div>
     </div>`;
-    console.log("After trying to print");
     divContainer.appendChild(cardDiv);
   });
 };
 
+//VALIDATE CARD COLOR
+//SINCE THE API SOMETIMES FETCHES A CARD OF THE WRONG COLORS, WE NEED TO CHECK CLIENTSIDE FOR ERRORS
+
 //NOW, ADD ALL THE FUNCTIONS TOGETHER AND PRESENT THE DATA
 const getCardButton = document.getElementById("generateCard");
-
 getCardButton.addEventListener("click", async () => {
+  cardIterator = 0;
+  // LOADING IMAGE
+  divContainer.innerHTML = `
+  <section class="spinner-container">
+  <div class="spinner">
+      <div class="spinnerin"></div>
+   </div>
+   </section>`;
+
   const card = await getInfo();
   const image = await getCardImageUrl(card["cards"][0].name);
+
   addContentToPage(card, image);
   console.log(card);
 });
