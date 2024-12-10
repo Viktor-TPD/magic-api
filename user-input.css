@@ -1,3 +1,7 @@
+:root {
+  --color-base-size: 85%;
+}
+
 .inactive {
   display: none;
 }
@@ -28,17 +32,31 @@ input {
 }
 
 .colorContainer {
+  gap: 2.5%;
   display: flex;
   flex-direction: row;
-  gap: 1rem;
   justify-content: center;
+  padding: 5%;
+}
+
+.color {
+  transition: all 1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  scale: 1;
 }
 
 .color > img {
-  width: 25px;
-  height: 25px;
+  z-index: 0;
+  width: var(--color-base-size);
+  height: var(--color-base-size);
   display: flex;
   justify-content: center;
+  transition: all 500ms;
+  filter: grayscale(50%);
+  filter: opacity(20%);
+  will-change: scale;
 }
 
 .questionContainer {
@@ -49,4 +67,35 @@ input {
 .loadingImage {
   height: 100%;
   width: 100%;
+}
+
+.selected {
+  transition: all 1s;
+  background: linear-gradient(#000 1px, #0000 0),
+    linear-gradient(90deg, #000, #0000, #000),
+    linear-gradient(in oklch longer hue -2deg, #a00, #a00);
+}
+
+.selected > img {
+  z-index: 1;
+  will-change: scale;
+  transition: all 700ms;
+  scale: 1.2;
+  filter: grayscale(0);
+  filter: opacity(1);
+}
+
+h2 {
+  animation: text-animation 3s infinite;
+  font-family: "Permanent Marker";
+  text-align: center;
+}
+
+@keyframes text-animation {
+  0% {
+    color: black;
+  }
+  50% {
+    color: rgb(122, 122, 122);
+  }
 }

@@ -56,7 +56,7 @@ function getCardColorStates() {
 
 //GET TEXT
 // @todo NEEDS REWORK!
-const cardTextPrefix = "&text=as"; // @todo FIX BETTER DEFAULT VALUE?
+const cardTextPrefix = "&text="; // @todo FIX BETTER DEFAULT VALUE?
 function getCardTextInput() {
   const cardText = document.getElementById("inputText");
   const cardTextValue = cardTextPrefix + cardText.value.replaceAll(" ", ",");

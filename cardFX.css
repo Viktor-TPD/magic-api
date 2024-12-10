@@ -28,8 +28,8 @@ img {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 20px;
   transition: 700ms;
+  border-radius: 20px;
   background: linear-gradient(
     43deg,
     rgb(65, 88, 208) 0%,
@@ -47,7 +47,7 @@ img {
 
 .title {
   opacity: 0;
-  transition-duration: 300ms;
+  transition-duration: 400ms;
   transition-timing-function: ease-in-out-out;
   transition-delay: 100ms;
   position: absolute;
