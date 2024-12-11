@@ -1,56 +1,82 @@
 // FIND ALL LABELS!
 const labels = document.querySelectorAll("label");
+const heroText = document.getElementById("heroText");
 
-// LET'S ADD ALL THE FUNNY COLOR NAMES!
+// LET'S ADD ALL THE FUNNY COLOR NAMES (IN ALPHABETICAL ORDER SINCE WE WANT TO SORT THE KEY)
 const colorCombinationNames = {
   // MONO
-  "[w]": "Mono-White",
-  "[u]": "Mono-Blue",
-  "[b]": "Mono-Black",
-  "[r]": "Mono-Red",
-  "[g]": "Mono-Green",
+  "[W]": "Mono-White",
+  "[U]": "Mono-Blue",
+  "[B]": "Mono-Black",
+  "[R]": "Mono-Red",
+  "[G]": "Mono-Green",
 
   // GUILDS
-  "[w,u]": "Azorius",
-  "[u,b]": "Dimir",
-  "[b,r]": "Rakdos",
-  "[r,g]": "Gruul",
-  "[g,w]": "Selesnya",
-  "[w,b]": "Orzhov",
-  "[u,g]": "Simic",
-  "[b,g]": "Golgari",
-  "[r,w]": "Boros",
-  "[u,r]": "Izzet",
+  "[U,W]": "Azorius",
+  "[B,U]": "Dimir",
+  "[B,R]": "Rakdos",
+  "[G,R]": "Gruul",
+  "[G,W]": "Selesnya",
+  "[B,W]": "Orzhov",
+  "[G,U]": "Simic",
+  "[B,G]": "Golgari",
+  "[R,W]": "Boros",
+  "[R,U]": "Izzet",
 
   // SHARDS
-  "[w,u,b]": "Esper",
-  "[u,b,r]": "Grixis",
-  "[b,r,g]": "Jund",
-  "[r,g,w]": "Naya",
-  "[g,w,u]": "Bant",
+  "[B,U,W]": "Esper",
+  "[B,R,U]": "Grixis",
+  "[B,G,R]": "Jund",
+  "[G,R,W]": "Naya",
+  "[G,U,W]": "Bant",
 
   // WEDGES
-  "[w,b,r]": "Mardu",
-  "[u,r,g]": "Temur",
-  "[b,g,w]": "Abzan",
-  "[r,w,u]": "Jeskai",
-  "[g,u,b]": "Sultai",
+  "[B,R,W]": "Mardu",
+  "[G,R,U]": "Temur",
+  "[B,G,W]": "Abzan",
+  "[R,U,W]": "Jeskai",
+  "[B,G,U]": "Sultai",
 
-  // DOESN'T HAVE OFFICIAL NAMES. USING MY PLAYGROUPS PETNAMES
-  "[w,u,b,r]": "Chaos",
-  "[u,b,r,g]": "Aggresion",
-  "[b,r,g,w]": "Altruism",
-  "[r,g,w,u]": "Growth",
-  "[g,w,u,b]": "Artifice",
+  // DOESN'T HAVE OFFICIAL NAMES. USING MY PLAYGROUP'S PET NAMES
+  "[B,R,U,W]": "Chaos",
+  "[B,G,R,U]": "Aggression",
+  "[B,G,R,W]": "Altruism",
+  "[G,R,U,W]": "Growth",
+  "[B,G,U,W]": "Artifice",
 
   // Five-Color
-  "[w,u,b,r,g]": "Rainbow",
+  "[B,G,R,U,W]": "Rainbow",
 };
 
 // ADD EVENTLISTENERS...
+
+let activeColors = [];
+
 labels.forEach((label) => {
   label.addEventListener("mouseup", () => {
-    console.log(label);
+    // console.log(label.id); //@debug
     label.classList.toggle("selected");
+    // console.log(label.className); //@debug
+    if (label.classList.contains("selected")) {
+      activeColors.push(label.id);
+    } else {
+      activeColors = activeColors.filter((color) => color !== label.id);
+    }
+    // console.log(`activeColors: ${activeColors}`); //@debug
+
+    // SORTING ALPHABETICALLY
+    const sortedColors = [...activeColors].sort();
+    const colorKey = `[${sortedColors.join(",")}]`;
+
+    console.log(colorCombinationNames[colorKey]);
+
+    if (colorCombinationNames[colorKey]) {
+      if (!heroText.classList.contains("typewriter")) {
+        console.log("yes");
+        heroText.innerHTML = `new text`;
+      }
+    } else {
+      console.log("no");
+    }
   });
 });

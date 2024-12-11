@@ -71,9 +71,9 @@ input {
 
 .selected {
   transition: all 1s;
-  background: linear-gradient(#000 1px, #0000 0),
+  /* background: linear-gradient(#000 1px, #0000 0),
     linear-gradient(90deg, #000, #0000, #000),
-    linear-gradient(in oklch longer hue -2deg, #a00, #a00);
+    linear-gradient(in oklch longer hue -2deg, #a00, #a00); */
 }
 
 .selected > img {
@@ -85,10 +85,48 @@ input {
   filter: opacity(1);
 }
 
+.choiceContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 h2 {
   animation: text-animation 3s infinite;
   font-family: "Permanent Marker";
-  text-align: center;
+  width: max-content;
+  font-size: calc(6px + 4vw);
+  transition: all 1s;
+}
+
+.typewriter {
+  overflow: hidden;
+  border-right: 0.15em solid orange;
+  white-space: nowrap;
+  margin: 0 auto;
+  letter-spacing: 0.15em;
+  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: orange;
+  }
 }
 
 @keyframes text-animation {
