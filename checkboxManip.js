@@ -1,6 +1,8 @@
 // FIND ALL LABELS!
 const labels = document.querySelectorAll("label");
 const heroText = document.getElementById("heroText");
+const heroColorInfo = document.getElementById("heroColorInfo");
+const getCardsButton = document.getElementById("generateCard");
 
 // LET'S ADD ALL THE FUNNY COLOR NAMES (IN ALPHABETICAL ORDER SINCE WE WANT TO SORT THE KEY)
 const colorCombinationNames = {
@@ -68,15 +70,25 @@ labels.forEach((label) => {
     const sortedColors = [...activeColors].sort();
     const colorKey = `[${sortedColors.join(",")}]`;
 
-    console.log(colorCombinationNames[colorKey]);
+    // console.log(colorCombinationNames[colorKey]);
 
     if (colorCombinationNames[colorKey]) {
-      if (!heroText.classList.contains("typewriter")) {
+      if (heroColorInfo.childNodes.length != 0) {
         console.log("yes");
-        heroText.innerHTML = `new text`;
+        heroColorInfo.innerText = colorCombinationNames[colorKey];
+      } else {
+        console.log("no color?");
+        getCardsButton.classList.remove("inactive");
+        heroText.classList.add("noAnimation");
+        // heroColorInfo.classList.add("typewriter");
+        heroText.innerText = "I'm looking for...";
+        heroColorInfo.innerText = colorCombinationNames[colorKey];
       }
     } else {
       console.log("no");
+      getCardsButton.classList.add("inactive");
+      heroText.innerText = "SELECT A COLOR TO BEGIN";
+      heroColorInfo.innerText = "";
     }
   });
 });

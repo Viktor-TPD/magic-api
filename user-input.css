@@ -2,6 +2,15 @@
   --color-base-size: 85%;
 }
 
+html {
+  background: linear-gradient(#000 1px, #0000 0),
+    linear-gradient(90deg, #000, #0000, #000),
+    linear-gradient(in oklch longer hue -2deg, #a00, #a00);
+  background-size: 100% 100%;
+  background-blend-mode: color-burn;
+  height: 100vh;
+}
+
 .inactive {
   display: none;
 }
@@ -100,11 +109,15 @@ h2 {
   transition: all 1s;
 }
 
+.choiceContainer > .noAnimation {
+  animation: none;
+}
+
 .typewriter {
   overflow: hidden;
   border-right: 0.15em solid orange;
   white-space: nowrap;
-  margin: 0 auto;
+  margin: 0;
   letter-spacing: 0.15em;
   animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
 }
