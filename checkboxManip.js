@@ -50,6 +50,16 @@ const colorCombinationNames = {
   "[B,G,R,U,W]": "Rainbow",
 };
 
+// CARDCONSTRUCTION ARRAYS/OBJECTS
+const types = ["creature", "artifact", "enchantment", "instant", "sorcery"];
+const cardText = {
+  creature: ["trample", "reach", "deathtouch", "lifelink", "vigilance"],
+  artifact: ["exile", "sacrifice", "destroy", "search", "draw"],
+  enchantment: ["create", "exile", "additional", "draw"],
+  instant: ["destroy", "exile", "graveyard", "draw"],
+  sorcery: ["destroy", "exile", "graveyard", "draw"],
+};
+console.log(cardText.creature[2]); //@debug
 // ADD EVENTLISTENERS...
 
 let activeColors = [];
@@ -74,10 +84,10 @@ labels.forEach((label) => {
 
     if (colorCombinationNames[colorKey]) {
       if (heroColorInfo.childNodes.length != 0) {
-        console.log("yes");
+        console.log("yes"); //@debug
         heroColorInfo.innerText = colorCombinationNames[colorKey];
       } else {
-        console.log("no color?");
+        console.log("no color?"); //@debug
         getCardsButton.classList.remove("inactive");
         heroText.classList.add("noAnimation");
         // heroColorInfo.classList.add("typewriter");
@@ -85,7 +95,7 @@ labels.forEach((label) => {
         heroColorInfo.innerText = colorCombinationNames[colorKey];
       }
     } else {
-      console.log("no");
+      console.log("no"); //@debug
       getCardsButton.classList.add("inactive");
       heroText.innerText = "SELECT A COLOR TO BEGIN";
       heroColorInfo.innerText = "";
