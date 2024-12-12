@@ -7,8 +7,8 @@ const cardTypesContainer = document.getElementById("types");
 const cardTypes = document.getElementById("cardTypes");
 const chosenType = document.getElementById("chosenType");
 
-// @todo THIS IS MESSY. SINCE THEY'RE PRETTY MUCH GOING TO BE THE SAME OBJECT I SHOULD CREATE INSTANCES OF IT.
-// @todo WHEN I'VE GOT TIME, I'LL DO THAT CHANGE.
+// THIS IS MESSY. SINCE THEY'RE PRETTY MUCH GOING TO BE THE SAME OBJECT I SHOULD CREATE INSTANCES OF IT.
+// WHEN I'VE GOT TIME, I'LL DO THAT CHANGE.
 const cardContentContainer1 = document.getElementById("cardText1");
 const cardContentContainer2 = document.getElementById("cardText2");
 const cardContentContainer3 = document.getElementById("cardText3");
@@ -84,46 +84,34 @@ const cardText = {
   instant: ["destroy", "exile", "graveyard", "draw"],
   sorcery: ["destroy", "exile", "graveyard", "draw"],
 };
-// @todo: IMPLEMENT LESS THAN (<) AND GREATER THAN (>) LOGIC
 const powerToughness = ["0", "1", "2", "3", "4", "5", "6"];
-console.log(cardText.creature[2]); //@debug
 
-// ADD EVENTLISTENERS...
-
+// THE FIVE COLORS!
 let activeColors = [];
 
 labels.forEach((label) => {
   label.addEventListener("mouseup", () => {
-    // console.log(label.id); //@debug
     label.classList.toggle("selected");
-    // console.log(label.className); //@debug
     if (label.classList.contains("selected")) {
       activeColors.push(label.id);
     } else {
       activeColors = activeColors.filter((color) => color !== label.id);
     }
-    // console.log(`activeColors: ${activeColors}`); //@debug
-
     // SORTING ALPHABETICALLY
     const sortedColors = [...activeColors].sort();
     const colorKey = `[${sortedColors.join(",")}]`;
 
-    // console.log(colorCombinationNames[colorKey]);
-
+    // GET THE NAMES!
     if (colorCombinationNames[colorKey]) {
       if (heroColorInfo.childNodes.length != 0) {
-        console.log("yes"); //@debug
         heroColorInfo.innerText = colorCombinationNames[colorKey];
       } else {
-        console.log("no color?"); //@debug
         revealTypesMenu("reveal");
         getCardsButton.classList.remove("inactive");
-        heroText.classList.add("noAnimation");
-        heroText.innerText = "I'm looking for...";
+        heroText.classList.add("inactive");
         heroColorInfo.innerText = colorCombinationNames[colorKey];
       }
     } else {
-      console.log("no"); //@debug
       revealTypesMenu("hide");
       getCardsButton.classList.add("inactive");
       heroText.innerText = "SELECT A COLOR TO BEGIN";
@@ -135,11 +123,14 @@ labels.forEach((label) => {
       ].forEach((container) => {
         container.classList.add("inactive");
       });
+      heroText.classList.remove("inactive");
+      heroText.classList.remove("noAnimation");
+
+      revealPowerToughness();
     }
   });
 });
 
-// @todo FIGURE OUT A BETTER NAME FOR hideOrReveal
 function revealTypesMenu(hideOrReveal) {
   if (hideOrReveal === "reveal") {
     types.forEach((type, index) => {
@@ -149,7 +140,6 @@ function revealTypesMenu(hideOrReveal) {
       anchor.textContent = type;
 
       anchor.addEventListener("mouseup", () => {
-        console.log(`clicked ${type}`); //@debug
         //REVEAL CARDTEXT HERE, AND REVEAL P/T IF IT'S A CREATURE
         setTextContent("");
         revealCardText("reveal", type);
@@ -199,7 +189,7 @@ function revealCardText(hideOrReveal, cardType) {
 
     if (!cardTextArray) {
       console.log(`No card text found for type: ${cardType}`);
-      return; // @debug Exit if no card text exists for the type
+      return;
     }
 
     // Containers for each dropdown
@@ -207,7 +197,6 @@ function revealCardText(hideOrReveal, cardType) {
 
     // Populate each container with the same set of options
     containers.forEach((container, containerIndex) => {
-      console.log(containerIndex); // @debug Debugging line
       cardTextArray.forEach((option, optionIndex) => {
         const anchor = document.createElement("a");
         anchor.className = `cardContentDropDown${containerIndex}-${optionIndex}`;
@@ -263,7 +252,6 @@ function setTextContent(string, index) {
     chosenCardContent1.innerText = string;
     chosenCardContent2.innerText = string;
     chosenCardContent3.innerText = string;
-    // console.log("I'm in the else statement"); // @debug
   }
 }
 

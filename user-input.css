@@ -8,30 +8,19 @@ html {
     linear-gradient(in oklch longer hue -2deg, #a00, #a00);
   background-size: 100% 100%;
   background-blend-mode: color-burn;
-  height: 100vh;
+  height: 110vh;
 }
 
 .inactive {
   display: none;
 }
 
-body main small {
-  display: block;
-  width: 100%;
-  text-align: center;
-}
-
-.textInputContainer {
+.flex {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
+  align-items: baseline;
 }
 
-.textInputContainer input {
-  width: 80%;
-}
-
+/* HIDE CHECKBOXES */
 input {
   opacity: 0;
   width: 0.1px;
@@ -45,7 +34,7 @@ input {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  padding: 5%;
+  padding: 5% 5% 2.5% 5%;
 }
 
 .color {
@@ -60,6 +49,8 @@ input {
   z-index: 0;
   width: var(--color-base-size);
   height: var(--color-base-size);
+  max-height: 150px;
+
   display: flex;
   justify-content: center;
   transition: all 500ms;
@@ -70,7 +61,32 @@ input {
 
 .questionContainer {
   display: flex;
+  flex-direction: row;
   justify-content: space-evenly;
+  gap: 1rem;
+}
+
+@media only screen and (max-width: 650px) {
+  .questionContainer {
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: space-evenly;
+  }
+}
+
+.questionContainer > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.paste-button ~ h3 {
+  font-family: "Permanent Marker";
+  height: fit-content;
+  margin: 0;
+  color: rgb(185, 185, 185);
+  padding-left: 1rem;
+  font-size: calc(10px + 2vw);
 }
 
 .loadingImage {
@@ -80,9 +96,6 @@ input {
 
 .selected {
   transition: all 1s;
-  /* background: linear-gradient(#000 1px, #0000 0),
-    linear-gradient(90deg, #000, #0000, #000),
-    linear-gradient(in oklch longer hue -2deg, #a00, #a00); */
 }
 
 .selected > img {
@@ -105,47 +118,39 @@ h2 {
   animation: text-animation 3s infinite;
   font-family: "Permanent Marker";
   width: max-content;
-  font-size: calc(6px + 4vw);
+  font-size: calc(30px + 2vw);
   transition: all 1s;
-}
-
-.choiceContainer > .noAnimation {
-  animation: none;
-}
-
-.typewriter {
-  overflow: hidden;
-  border-right: 0.15em solid orange;
-  white-space: nowrap;
-  margin: 0;
-  letter-spacing: 0.15em;
-  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
-}
-
-@keyframes typing {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
-}
-
-@keyframes blink-caret {
-  from,
-  to {
-    border-color: transparent;
-  }
-  50% {
-    border-color: orange;
-  }
+  margin-top: 0;
 }
 
 @keyframes text-animation {
   0% {
-    color: black;
+    color: #986d24;
   }
   50% {
-    color: rgb(122, 122, 122);
+    color: rgb(185, 185, 185);
+  }
+  100% {
+    color: #986d24;
+  }
+}
+
+#heroColorInfo {
+  animation: none;
+  color: rgb(185, 185, 185);
+}
+
+#randomCards > h3 {
+  font-family: "Permanent Marker";
+  height: fit-content;
+  margin: 0;
+  color: rgb(185, 185, 185);
+  padding-left: 1rem;
+  font-size: calc(10px + 2vw);
+}
+
+@media only screen and (max-width: 650px) {
+  #heroText {
+    font-size: calc(10px + 3vw);
   }
 }

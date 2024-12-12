@@ -1,19 +1,31 @@
 /* From Uiverse.io by aadium */
+/* BUT ALSO A LOT OF EDITING FROM ME */
 .paste-button {
   position: relative;
   display: block;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  padding-bottom: 1rem;
 }
 
-.button {
+.button,
+#generateCard {
   background-color: #4caf50;
   color: #212121;
   padding: 10px 15px;
-  font-size: 15px;
+  font-size: calc(10px + 1.5vw);
   font-weight: bold;
   border: 2px solid transparent;
   border-radius: 15px;
   cursor: pointer;
+}
+
+#generateCard {
+  margin: 1rem;
+  transition: background-color 300ms ease-in-out;
+}
+
+#generateCard:hover {
+  background-color: rgb(222, 170, 46);
 }
 
 .dropdown-content {
@@ -21,6 +33,7 @@
   font-size: 13px;
   position: absolute;
   z-index: 1;
+  width: calc(100% + 10px);
   min-width: 200px;
   background-color: #212121;
   border: 2px solid #4caf50;
@@ -29,6 +42,7 @@
 }
 
 .dropdown-content a {
+  font-size: calc(10px + 1.5vw);
   color: #4caf50;
   padding: 8px 10px;
   text-decoration: none;

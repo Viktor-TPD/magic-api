@@ -75,7 +75,6 @@ function getCardTextInput() {
 
   let result = "";
   if (chosenType.innerHTML == "creature") {
-    // @todo: IMPLEMENT LESS THAN (<) AND GREATER THAN (>) LOGIC
     let power = powerPrefix + chosenPower.innerText;
     let toughness = toughnessPrefix + chosenToughness.innerText;
     const powerToughness = power + toughness;
@@ -90,7 +89,6 @@ function getCardTextInput() {
 //ADD USER PARAMETERS
 const getUserParameters = () => {
   const userParameters = url + getCardColorStates() + getCardTextInput();
-  console.log(userParameters); //@debug
   return userParameters;
 };
 
@@ -120,6 +118,11 @@ const getInfo = async () => {
 
     console.log(data);
 
+    if (data.cards == "") {
+      console.log("no cards, no names.");
+      divContainer.innerHTML = `<h3>No cards found :(`;
+    }
+
     // @todo IF THERE'S TIME, TRY TO DRY THIS BY REWRITING AND REUSING getCardColorState()
     // Select all checkboxes in the colorContainer section
     const checkboxes = document.querySelectorAll(
@@ -127,7 +130,6 @@ const getInfo = async () => {
     );
 
     // Initialize arrays to hold checked and unchecked IDs
-    let checked = [];
     let unchecked = [];
 
     // Loop through each checkbox
@@ -144,8 +146,7 @@ const getInfo = async () => {
 
     const filteredCards = filterCardsByColor(data.cards, excludeColors);
 
-    console.log(filteredCards); // @debug This will log only the valid filtered cards
-    return { cards: filteredCards }; // Return the filtered cards
+    return { cards: filteredCards };
   } catch (error) {
     console.error("Error fetching cards:", error);
   }
@@ -174,6 +175,7 @@ const getCardImageUrl = async (cardName) => {
       console.log(`Image not available for ${cardData.name}.`);
     }
   } catch (error) {
+    divContainer.innerHTML = "";
     console.error("Error:", error.message);
   }
 };
@@ -238,5 +240,5 @@ getCardButton.addEventListener("click", async () => {
   const image = await getCardImageUrl(card["cards"][0].name);
 
   addContentToPage(card, image);
-  console.log(card); //@debug
+  console.log(card); //VIEW CARD IN CONSOLE
 });

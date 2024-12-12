@@ -42,72 +42,81 @@
           <img src="./assets/G.svg" alt="" />
         </label>
       </section>
-      <section class="textInputContainer">
-        <input
-          type="text"
-          id="inputText"
-          placeholder="'destroy', 'flying' etc."
-        />
-      </section>
       <section class="choiceContainer">
         <h2 id="heroText">SELECT A COLOR TO BEGIN</h2>
         <h2 id="heroColorInfo" class="noAnimation"></h2>
         <div class="questionContainer">
-          <article id="types" class="inactive">
-            <div class="paste-button">
-              <button class="button">Card type: &nbsp; ▼</button>
-              <div class="dropdown-content" id="cardTypes"></div>
-            </div>
-            <h3 id="chosenType"></h3>
-          </article>
+          <section>
+            <div id="randomCards"></div>
+          </section>
+          <div>
+            <article id="types" class="inactive">
+              <div class="flex">
+                <div class="paste-button">
+                  <button class="button">Card type: &nbsp; ▼</button>
+                  <div class="dropdown-content" id="cardTypes"></div>
+                </div>
+                <h3 id="chosenType"></h3>
+              </div>
+            </article>
 
-          <article id="cardText1" class="inactive">
-            <div class="paste-button">
-              <button class="button">Card text: &nbsp; ▼</button>
-              <div class="dropdown-content" id="cardContent1"></div>
-            </div>
-            <h3 id="chosenCardContent1"></h3>
-          </article>
+            <section>
+              <article id="cardText1" class="inactive">
+                <div class="flex">
+                  <div class="paste-button">
+                    <button class="button">Card text: &nbsp; ▼</button>
+                    <div class="dropdown-content" id="cardContent1"></div>
+                  </div>
+                  <h3 id="chosenCardContent1"></h3>
+                </div>
+              </article>
 
-          <article id="cardText2" class="inactive">
-            <div class="paste-button">
-              <button class="button">Card text: &nbsp; ▼</button>
-              <div class="dropdown-content" id="cardContent2"></div>
-            </div>
-            <h3 id="chosenCardContent2"></h3>
-          </article>
+              <article id="cardText2" class="inactive">
+                <div class="flex">
+                  <div class="paste-button">
+                    <button class="button">Card text: &nbsp; ▼</button>
+                    <div class="dropdown-content" id="cardContent2"></div>
+                  </div>
+                  <h3 id="chosenCardContent2"></h3>
+                </div>
+              </article>
 
-          <article id="cardText3" class="inactive">
-            <div class="paste-button">
-              <button class="button">Card text: &nbsp; ▼</button>
-              <div class="dropdown-content" id="cardContent3"></div>
-            </div>
-            <h3 id="chosenCardContent3"></h3>
-          </article>
-
-          <article id="power" class="inactive">
-            <div class="paste-button">
-              <button class="button">Power: &nbsp; ▼</button>
-              <div class="dropdown-content" id="powerContent"></div>
-            </div>
-            <h3 id="chosenPower"></h3>
-          </article>
-          <article id="toughness" class="inactive">
-            <div class="paste-button">
-              <button class="button">Toughness: &nbsp; ▼</button>
-              <div class="dropdown-content" id="toughnessContent"></div>
-            </div>
-            <h3 id="chosenToughness"></h3>
-          </article>
+              <article id="cardText3" class="inactive">
+                <div class="flex">
+                  <div class="paste-button">
+                    <button class="button">Card text: &nbsp; ▼</button>
+                    <div class="dropdown-content" id="cardContent3"></div>
+                  </div>
+                  <h3 id="chosenCardContent3"></h3>
+                </div>
+              </article>
+            </section>
+            <section>
+              <article id="power" class="inactive">
+                <div class="flex">
+                  <div class="paste-button">
+                    <button class="button">Power: &nbsp; ▼</button>
+                    <div class="dropdown-content" id="powerContent"></div>
+                  </div>
+                  <h3 id="chosenPower"></h3>
+                </div>
+              </article>
+              <article id="toughness" class="inactive">
+                <div class="flex">
+                  <div class="paste-button">
+                    <button class="button">Toughness: &nbsp; ▼</button>
+                    <div class="dropdown-content" id="toughnessContent"></div>
+                  </div>
+                  <h3 id="chosenToughness"></h3>
+                </div>
+              </article>
+            </section>
+          </div>
         </div>
+        <button id="generateCard" class="inactive">Get Random Card!</button>
       </section>
-
-      <button id="generateCard" class="inactive">Get Random Card!</button>
-      <div id="randomCards"></div>
     </main>
     <script src="fetch.js"></script>
     <script src="checkboxManip.js"></script>
-
-    <!-- "ACTUAL" MAGIC CARD GOES HERE -->
   </body>
 </html>

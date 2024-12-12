@@ -10,6 +10,14 @@
   transition: 200ms;
 }
 
+@media only screen and (max-width: 450px) {
+  .container {
+    width: 70vw;
+    height: auto;
+    aspect-ratio: 75 / 100;
+  }
+}
+
 .container:active {
   width: 180px;
   height: 245px;
@@ -371,6 +379,22 @@ img {
 }
 
 /* LOADING SPINNER  */
+
+.randomCards > h3 {
+  font-family: "Permanent Marker";
+  height: fit-content;
+  margin: 0;
+  color: rgb(185, 185, 185);
+  padding-left: 1rem;
+  font-size: calc(10px + 2vw);
+}
+
+.spinner-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .spinner {
   width: 3em;
   height: 3em;
