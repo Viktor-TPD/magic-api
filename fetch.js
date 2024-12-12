@@ -55,12 +55,36 @@ function getCardColorStates() {
 }
 
 //GET TEXT
-// @todo NEEDS REWORK!
-const cardTextPrefix = "&text="; // @todo FIX BETTER DEFAULT VALUE?
+const cardTypePrefix = "&types=";
+const cardTextPrefix = "&text=";
+const powerPrefix = "&power=";
+const toughnessPrefix = "&toughness=";
 function getCardTextInput() {
-  const cardText = document.getElementById("inputText");
-  const cardTextValue = cardTextPrefix + cardText.value.replaceAll(" ", ",");
-  return cardTextValue;
+  let cardTextSuffix = "";
+  [chosenCardContent1, chosenCardContent2, chosenCardContent3].forEach(
+    (content) => {
+      if (content.innerHTML) {
+        cardTextSuffix += content.innerText + ",";
+      }
+    }
+  );
+  console.log(cardTextSuffix);
+  cardTextSuffix = cardTextSuffix.slice(0, -1);
+  const cardTextValue = cardTextPrefix + cardTextSuffix;
+  const cardTypeValue = cardTypePrefix + chosenType.innerHTML;
+
+  let result = "";
+  if (chosenType.innerHTML == "creature") {
+    // @todo: IMPLEMENT LESS THAN (<) AND GREATER THAN (>) LOGIC
+    let power = powerPrefix + chosenPower.innerText;
+    let toughness = toughnessPrefix + chosenToughness.innerText;
+    const powerToughness = power + toughness;
+
+    result = cardTextValue + cardTypeValue + powerToughness;
+  } else {
+    result = cardTextValue + cardTypeValue;
+  }
+  return result;
 }
 
 //ADD USER PARAMETERS
