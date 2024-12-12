@@ -6,6 +6,7 @@
     <title>API</title>
     <link rel="stylesheet" href="user-input.css" />
     <link rel="stylesheet" href="cardFX.css" />
+    <link rel="stylesheet" href="dropDown.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -52,11 +53,17 @@
         <h2 id="heroText">SELECT A COLOR TO BEGIN</h2>
         <h2 id="heroColorInfo" class="noAnimation"></h2>
         <div class="questionContainer">
-          <h3 id="types"></h3>
-          <h3 id="cardText"></h3>
-          <h3 id="cardText2"></h3>
-          <h3 id="power"></h3>
-          <h3 id="toughness"></h3>
+          <div id="types" class="inactive">
+            <div class="paste-button">
+              <button class="button">Paste &nbsp; ▼</button>
+              <div class="dropdown-content" id="cardTypes"></div>
+              <h3 id="chosenType"></h3>
+            </div>
+          </div>
+          <div id="cardText"></div>
+          <div id="cardText2"></div>
+          <div id="power"></div>
+          <div id="toughness"></div>
         </div>
       </section>
 

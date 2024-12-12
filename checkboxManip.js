@@ -3,6 +3,9 @@ const labels = document.querySelectorAll("label");
 const heroText = document.getElementById("heroText");
 const heroColorInfo = document.getElementById("heroColorInfo");
 const getCardsButton = document.getElementById("generateCard");
+const cardTypesContainer = document.getElementById("types");
+const cardTypes = document.getElementById("cardTypes");
+const chosenType = document.getElementById("chosenType");
 
 // LET'S ADD ALL THE FUNNY COLOR NAMES (IN ALPHABETICAL ORDER SINCE WE WANT TO SORT THE KEY)
 const colorCombinationNames = {
@@ -60,6 +63,7 @@ const cardText = {
   sorcery: ["destroy", "exile", "graveyard", "draw"],
 };
 console.log(cardText.creature[2]); //@debug
+
 // ADD EVENTLISTENERS...
 
 let activeColors = [];
@@ -88,17 +92,43 @@ labels.forEach((label) => {
         heroColorInfo.innerText = colorCombinationNames[colorKey];
       } else {
         console.log("no color?"); //@debug
+        revealTypesMenu("reveal");
         getCardsButton.classList.remove("inactive");
         heroText.classList.add("noAnimation");
-        // heroColorInfo.classList.add("typewriter");
         heroText.innerText = "I'm looking for...";
         heroColorInfo.innerText = colorCombinationNames[colorKey];
       }
     } else {
       console.log("no"); //@debug
+      revealTypesMenu("hide");
       getCardsButton.classList.add("inactive");
       heroText.innerText = "SELECT A COLOR TO BEGIN";
       heroColorInfo.innerText = "";
     }
   });
 });
+
+// @todo FIGURE OUT A BETTER NAME FOR hideOrReveal
+function revealTypesMenu(hideOrReveal) {
+  if (hideOrReveal === "reveal") {
+    types.forEach((type, index) => {
+      // CREATE <a> ELEMENT
+      const anchor = document.createElement("a");
+      anchor.className = `typeDropDown${index}`;
+      anchor.textContent = type;
+
+      anchor.addEventListener("mouseup", () => {
+        console.log(`clicked ${type}`);
+        chosenType.innerText = type;
+      });
+
+      // Append the element to the container
+      cardTypes.appendChild(anchor);
+    });
+    cardTypesContainer.classList.remove("inactive");
+  } else {
+    cardTypesContainer.classList.add("inactive");
+    chosenType.innerText = "";
+    cardTypes.innerHTML = "";
+  }
+}
